@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1553809805890.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3446317137",
+    "id" : "DC608DB8",
+    "lastKnownWriteTime" : 1548885932,
+    "last_content_update" : 1548885932,
+    "path" : "~/shinyAppBuilder/R/TabItemDash.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "58,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

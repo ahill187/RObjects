@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1553812661028.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "371999829",
+    "id" : "FC5C08DE",
+    "lastKnownWriteTime" : 1554937396,
+    "last_content_update" : 1554937396063,
+    "path" : "~/BurdenOfAsthma/app.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "226,43",
+        "scrollLine" : "206"
+    },
+    "relative_order" : 7,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

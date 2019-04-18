@@ -1,0 +1,103 @@
+#' @title googleChart
+#' @description EFFECTS: given parameters for Google Charts API,
+#' create Bubble Chart
+#' REQUIRES: data is a data frame
+#' @param data a data.frame containing the data to be plotted in columns
+#' @param column0 string: title of column containing ID's for Bubble Chart
+#' @param column1 string: title of column for x-axis
+#' @param column2 string: title of column for y-axis
+#' @param column3 string: title of column for color (optional)
+#' @param column4 string: title of column for size of bubbles (optional)
+#' @import htmlwidgets
+#' @import jsonlite
+#'
+#' @export
+googleChart <- function(elementId,
+                        title,
+                        data,
+                        headerTitles,
+                        chartType,
+                        column0,
+                        column1,
+                        column2,
+                        column3 = NULL,
+                        column4 = NULL,
+                        keyColumns = NULL,
+                        valueColumns = NULL,
+                        groups = NULL,
+                        transform = FALSE,
+                        width = NULL, height = NULL
+) {
+
+  chartTypes = c("bubbleChart", "candleStickChart")
+  chartType = match.arg(chartType, chartTypes, several.ok = FALSE)
+  print(args)
+  x = switch(chartType,
+         bubbleChart = bubbleChart(elementId, title, data, headerTitles, column0,
+                                   column1,
+                                   column2,
+                                   column3,
+                                   column4,
+                                   keyColumns,
+                                   valueColumns,
+                                   groups,
+                                   transform,
+                                   width, height),
+         candleStickChart = candleStickChart(elementId,
+                                             title,
+                                             data,
+                                             column0,
+                                             column1,
+                                             column2,
+                                             column3,
+                                             column4,
+                                             keyColumns,
+                                             valueColumns,
+                                             groups,
+                                             transform,
+                                             width, height))
+
+  header = c(column0, column1, column2, column3, column4)
+  uniqueColumns = length(unique(header))
+  if(uniqueColumns < length(header)){
+      stop("Columns must be unique")
+  }
+
+  # create widget
+  htmlwidgets::createWidget(
+    name = 'googleChart',
+    x,
+    width = width,
+    height = height,
+    package = 'googleCharts',
+    elementId = elementId
+  )
+}
+
+#' Shiny bindings for googleChart
+#'
+#' Output and render functions for using googleChart within Shiny
+#' applications and interactive Rmd documents.
+#'
+#' @param outputId output variable to read from
+#' @param width,height Must be a valid CSS unit (like \code{'100\%'},
+#'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
+#'   string and have \code{'px'} appended.
+#' @param expr An expression that generates a googleChart
+#' @param env The environment in which to evaluate \code{expr}.
+#' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
+#'   is useful if you want to save an expression in a variable.
+#'
+#' @name googleChart-shiny
+#'
+#' @export
+googleChartOutput <- function(outputId, width = '100%', height = '400px'){
+  htmlwidgets::shinyWidgetOutput(outputId, 'googleChart', width, height, package = 'googleCharts')
+}
+
+#' @rdname googleChart-shiny
+#' @export
+renderGoogleChart <- function(expr, env = parent.frame(), quoted = FALSE) {
+  if (!quoted) { expr <- substitute(expr) } # force quoted
+  htmlwidgets::shinyRenderWidget(expr, googleChartOutput, env, quoted = TRUE)
+}

@@ -1,0 +1,111 @@
+#' @title bubbleChart
+#' @description EFFECTS: given parameters for Google Charts API,
+#' create Bubble Chart
+#' REQUIRES: data is a data frame
+#' @param data a data.frame containing the data to be plotted in columns
+#' @param column0 string: title of column containing ID's for Bubble Chart
+#' @param column1 string: title of column for x-axis
+#' @param column2 string: title of column for y-axis
+#' @param column3 string: title of column for color (optional)
+#' @param column4 string: title of column for size of bubbles (optional)
+#' @import htmlwidgets
+#' @import jsonlite
+#'
+#' @export
+bubbleChart <- function(elementId,title,
+                        data,
+                        headerTitles,
+                        column0,
+                        column1,
+                        column2,
+                        column3 = NULL,
+                        column4 = NULL,
+                        keyColumns = NULL,
+                        valueColumns = NULL,
+                        groups = NULL,
+                        transform = FALSE,
+                        width = NULL, height = NULL) {
+  xData = data[[column1]]
+  yData = data[[column2]]
+  idData = data[[column0]]
+  columns = c(column0, column1, column2)
+  dataQuery = data.frame(data)
+  if(!is.numeric(xData)){
+    xDataOptions = as.character(unique(xData))
+    xData = match(as.character(xData), xDataOptions)
+    message("x values are not numeric, converting to numeric")
+  }
+  if(!is.numeric(yData)){
+    yDataOptions = as.character(unique(yData))
+    yData = match(as.character(yData), yDataOptions)
+    message("y values are not numeric, converting to numeric")
+  }
+  dataQuery[[column1]] = xData
+  dataQuery[[column2]] = yData
+  if(is.null(column3)){
+    column3 = "NoColor"
+    colorColumn = rep(0, length(yData))
+  } else{
+    colorColumn = data[[column3]]
+    columns = c(columns, column3)
+  }
+  if(is.null(column4)){
+    column4 = "NoSize"
+    sizeColumn = rep(0, length(yData))
+  } else {
+    columns = c(columns, column4)
+    sizeColumn = data[[column4]]
+  }
+  transformSum = paste0("SUM", valueColumns)
+
+
+  data = data.frame(idData, xData, yData, colorColumn, sizeColumn)
+
+  header = c(column0, column1, column2, column3, column4)
+  names(data) = header
+  dataJSON = toJSON(data, dataframe="values")
+  dataJSONQuery = toJSON(dataQuery)
+  headerJSON = toJSON(header, dataframe = "values")
+  elementIdJSON = toJSON(elementId)
+  headerTitlesJSON = toJSON(headerTitles, dataframe = "values")
+  if(transform) {
+    transformKeys = c()
+    groups = c()
+    for(key in keyColumns){
+      if(!(key %in% header)){
+        transformKeys = c(transformKeys, key)
+      } else {
+        groups = c(groups, key)
+      }
+    }
+    transformKeys = valueColumns
+    newColumns = c()
+    for(column in columns){
+      if(column %in% keyColumns){
+        newColumns = c(newColumns, column)
+      } else {
+        a = paste0("SUM", column)
+        newColumns = c(newColumns, a)
+      }
+    }
+    #columns = c(groups, transformSum)
+    columns = newColumns
+  }
+  # forward options using x
+  x = list(
+    elementIdJSON = elementIdJSON,
+    dataJSON = dataJSON,
+    headerJSON = headerJSON,
+    headerTitlesJSON = headerTitlesJSON,
+    transformJSON = toJSON(transform),
+    keyColumnsJSON = toJSON(keyColumns),
+    valueColumnsJSON = toJSON(valueColumns),
+    transformKeysJSON = toJSON(transformKeys),
+    groupsJSON = toJSON(groups),
+    dataJSONQuery = dataJSONQuery,
+    columnsJSON = toJSON(columns),
+    type = "bubbleChart"
+  )
+return(x)
+}
+

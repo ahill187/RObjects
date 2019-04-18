@@ -1,0 +1,128 @@
+"use strict";
+
+class ArrayFunctions {
+
+    static keyValueToArray(keyValueList, size, color) {
+        let array = [];
+        for (let keyValueElement of keyValueList) {
+            let keys = Object.keys(keyValueElement);
+            let row = [];
+            for (let key of keys) {
+                let value = keyValueElement[key];
+                row.push(value);
+            }
+            if(size === 'NoSize'){
+                row.push(0);
+            }
+            if(color === 'NoColor'){
+                row.push(0);
+            }
+            array.push(row);
+        }
+        return array;
+    }
+}
+class Log {
+    static trace(msg) {
+        console.log(`<T> ${new Date().toLocaleString()}: ${msg}`);
+    }
+    static info(msg) {
+        console.info(`<I> ${new Date().toLocaleString()}: ${msg}`);
+    }
+    static warn(msg) {
+        console.warn(`<W> ${new Date().toLocaleString()}: ${msg}`);
+    }
+    static error(msg) {
+        console.error(`<E> ${new Date().toLocaleString()}: ${msg}`);
+    }
+    static test(msg) {
+        console.log(`<X> ${new Date().toLocaleString()}: ${msg}`);
+    }
+}
+class Utility {
+    static checkIDStringOrApplyKey(id) {
+        return (id !== undefined) && (id !== null) && (id.length >= 1) && (id.indexOf("_") === -1);
+    }
+    static inBooleanList(booleanList, desiredBoolean) {
+        for (let logic of booleanList) {
+            if (logic === desiredBoolean) {
+                return true;
+            }
+        }
+        return false;
+    }
+    static trimExcessCharacters(str) {
+        return str.replace(/\\n/g, "").trim();
+    }
+    static formatAddressForURL(address) {
+        return address.replace(/ /g, "%20");
+    }
+    static isMathematicalApplyToken(applyToken) {
+        if (this.applyTokens.indexOf(applyToken) <= -1) {
+            throw new IInsightFacade_1.InsightError("APPLYTOKEN passed to Utility isMathematicalApplyToken not a valid token.");
+        }
+        else {
+            return this.mathematicalApplyTokens.indexOf(applyToken) > -1;
+        }
+    }
+}
+Utility.applyTokens = ["MAX", "MIN", "AVG", "COUNT", "SUM"];
+Utility.mathematicalApplyTokens = ["MAX", "MIN", "AVG", "SUM"];
+Utility.orderDirs = ["UP", "DOWN"];
+class HTMLUtility {
+    static findBuildingAttributesInTableEntry(childNode, info) {
+        for (let attr of childNode.attrs) {
+            if (attr.name === "class" && attr.value === "views-field views-field-field-building-code") {
+                info.shortname = HTMLUtility.searchForValueInTableEntry(Array.from(childNode.childNodes));
+            }
+            if (attr.name === "class" && attr.value === "views-field views-field-title") {
+                info.fullname = HTMLUtility.searchForValueInTableEntryWithAnchor(Array.from(childNode.childNodes));
+            }
+            if (attr.name === "class" && attr.value === "views-field views-field-field-building-address") {
+                info.address = HTMLUtility.searchForValueInTableEntry(Array.from(childNode.childNodes));
+            }
+            if (attr.name === "class" && attr.value === "views-field views-field-nothing") {
+                info.path = HTMLUtility.searchForPathInTableEntry(Array.from(childNode.childNodes));
+            }
+        }
+        let foundNames = info.shortname !== undefined && info.fullname !== undefined;
+        let foundAddrAndPath = info.address !== undefined && info.path !== undefined;
+        return foundNames && foundAddrAndPath;
+    }
+    static searchForValueInTableEntry(nodes) {
+        let str;
+        for (let node of nodes) {
+            if (node.nodeName === "#text") {
+                str = Utility.trimExcessCharacters(node.value);
+            }
+        }
+        return str;
+    }
+    static searchForValueInTableEntryWithAnchor(nodes) {
+        let value;
+        for (let node of nodes) {
+            if (node.nodeName === "a") {
+                for (let childNode of node.childNodes) {
+                    if (childNode.nodeName === "#text") {
+                        value = Utility.trimExcessCharacters(childNode.value);
+                    }
+                }
+            }
+        }
+        return value;
+    }
+    static searchForHREFInTableEntryWithAnchor(nodes) {
+        let href;
+        for (let node of nodes) {
+            if (node.nodeName === "a") {
+                for (let attr of node.attrs) {
+                    if (attr.name === "href") {
+                        href = Utility.trimExcessCharacters(attr.value);
+                    }
+                }
+            }
+        }
+        return href;
+    }
+
+}

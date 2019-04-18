@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1554933909809.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3532968328",
+    "id" : "32A706BD",
+    "lastKnownWriteTime" : 1553134186,
+    "last_content_update" : 1553134186,
+    "path" : "~/googleCharts/R/bubbleChart.R",
+    "project_path" : null,
+    "properties" : {
+    },
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

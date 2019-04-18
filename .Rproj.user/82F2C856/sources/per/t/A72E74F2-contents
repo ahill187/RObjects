@@ -1,0 +1,179 @@
+{
+    "title": "Burden of Asthma in US",
+    "appLayout": {
+      "mainTabs": {
+        "number": 4,
+        "titles": ["Costs", "QALY", "About", "Terms"]
+      },
+      "subTabs": {
+        "number":6,
+        "titles":[{"Costs":["Map","Graph"]},
+          {"QALY":["Map","Graph"]},
+          "About",
+          "Terms"]
+      },
+      "colorScheme":"startup"
+
+    },
+    "data": {
+      "classNames": ["Year", "State", "Age", "Sex"],
+      "valueNames": ["qalyLost", "indirectCost", "directCost"]
+
+    },
+    "tabs":[
+      {
+        "title": "Map",
+        "tabType": "map",
+        "inputId": "tab1",
+        "mainBoxColor": "info",
+        "valueBoxNumber": 3,
+        "valueBoxWidths": [6,6,12],
+        "tabNumber": 1,
+        "layerChoices": [{
+          "label":"Direct Medical Costs",
+          "valueName": "directCost"
+        }, {
+          "label":"Indirect Costs (Productivity Loss)",
+          "valueName": "indirectCost"
+        }],
+        "leafletMap": {
+          "mapName": "mapOne",
+          "basemapFile": "./static_data/canadaMap.RData",
+          "palette" :[
+            {
+              "label":"custom",
+              "value":"custom"},
+            {
+              "label":"custom",
+              "value":"custom"
+            }
+            ],
+          "numLayers":  2,
+          "layerChoices" : [
+            {
+              "label":"Overall Cost",
+              "value":"overall"},
+            {
+              "label":"Cost Per Capita",
+              "value":"perCapita"
+
+            }
+            ],
+          "groups" : ["Overall Cost","Cost per Capita"],
+          "plotLabels" : ["Cost: $","Cost/Person: $"],
+          "digits" : [-5, -1],
+          "dense" : [false, true],
+          "legendLabels" : ["legend1", "legend2"],
+          "prefix": ["$", "$"]
+        }
+      },
+      {
+        "title" : "Graph",
+        "inputId" : "tab2",
+        "tabType": "graph",
+        "mainBoxColor" : "info",
+        "tabNumber" : 2,
+        "dropdownChoices": [{
+          "label":"Direct Medical Costs",
+          "valueName": "directCost"
+        }, {
+          "label":"Indirect Cost",
+          "valueName": "indirectCost"
+        }],
+        "dropdownSelected": ["directCost"],
+        "dropdown": false,
+        "pngDownloadName" : "costGraph",
+        "sidebarChoicesNumber" : 7,
+        "sidebarShownLabels" : ["X-Axis", "Y-Axis", "State 1", "State 2", "Year","Color",
+                             "Size"],
+        "columnOptions" : {"xAxis": ["Age", "indirectCost", "directCost", "Year"],
+                           "yAxis": ["Age", "indirectCost", "directCost", "Year"],
+                           "state1": "generate",
+                           "state2": "generate",
+                           "year": "generate",
+                           "color":["Age", "Sex", "None"],
+                           "size" : ["indirectCost", "directCost", "None"]},
+        "columnTypes" : ["x-axis", "y-axis", "State", "State", "Year", "color",
+                      "size"],
+        "column0":"State"
+      },
+      {
+        "title": "Map",
+        "inputId": "tab3",
+        "tabType": "map",
+        "mainBoxColor": "info",
+        "valueBoxNumber": 1,
+        "valueBoxWidths": [12],
+        "tabNumber": 3,
+        "layerChoices": [{
+          "label":"QALY Lost",
+          "valueName": "qalyLost"
+        }],
+        "leafletMap": {
+          "mapName": "mapThree",
+          "basemapFile": "./static_data/canadaMap.RData",
+          "palette" :[{
+            "label":"custom",
+            "value":"custom"
+          }],
+          "numLayers":  1,
+          "layerChoices" : [
+            {
+              "label":"QALY Lost",
+              "value":"overall"}
+            ],
+          "groups" : ["QALY Lost"],
+          "plotLabels" : ["QALY Lost: "],
+          "digits" : [0],
+          "dense" : [true],
+          "legendLabels" : ["legend3"],
+          "prefix": [""]
+        }
+      },
+      {
+        "title" : "Graph",
+        "inputId" : "tab4",
+        "tabType": "graph",
+        "mainBoxColor" : "info",
+        "tabNumber" : 4,
+        "dropdownChoices": [{
+          "label":"QALY Lost",
+          "valueName": "qalyLost"
+        }],
+        "dropdownSelected": null,
+        "dropdown": false,
+        "pngDownloadName" : "qalyLostGraph",
+        "sidebarChoicesNumber" : 7,
+        "sidebarShownLabels" : ["X-Axis", "Y-Axis", "State 1", "State 2", "Year","Color",
+                             "Size"],
+        "columnOptions" : [["Age", "indirectCost", "directCost", "Year"],
+                           ["Age", "indirectCost", "directCost", "Year"],
+                           "generate",
+                           "generate",
+                           "generate",
+                           ["Age", "Sex", "None"],
+                           ["indirectCost", "directCost", "None"]],
+        "columnTypes" : ["x-axis", "y-axis", "State", "State", "Year", "color",
+                      "size"],
+        "column0":"State"
+      },
+      {
+        "title": "About",
+        "inputId": "tab5",
+        "tabType": "text",
+        "tabNumber" : 5,
+        "markdownFileName" : "about.Rmd",
+        "imageId" : "image1",
+        "imFile" : "logos2.png"
+      },
+      {
+        "title": "Terms",
+        "inputId": "tab6",
+        "tabType": "text",
+        "tabNumber" : 6,
+        "markdownFileName" : "disclaimer.rmd",
+        "imageId" : null,
+        "imFile" : null
+      }
+    ]
+}

@@ -1,0 +1,56 @@
+//shinyjs.getProfileData = function(params){
+//alert("heatmap");
+//console.log("testing");
+//}
+//import {google} from "https://www.gstatic.com/charts/loader.js";
+//google.charts.load('current', {'packages':['corechart']});
+//google.charts.setOnLoadCallback(function() { drawSeriesChart(dataJSON); });
+
+
+function drawSeriesChart(elementIdJSON, dataJSON, headerJSON, headerTitlesJSON,
+transformJSON,groupsJSON,transformKeysJSON,valueColumnsJSON,keyColumnsJSON, dataJSONQuery,
+columnsJSON, title) {
+
+      if(typeof(dataJSON)!="undefined"){
+        let elementId = elementIdJSON[0];
+        let chart = new google.visualization.BubbleChart(document.getElementById(elementId));
+        let header = headerJSON;
+        var headerTitles = headerTitlesJSON;
+        var options = {
+          title: title,
+          hAxis: {title: headerTitles[1],
+            minValue: -1,
+            maxValue: 5
+          },
+          vAxis: {title: headerTitles[2],
+            minValue: -1
+          },
+          bubble: {textStyle: {fontSize: 11}},
+          colors: ['blue', 'pink', 'orange', 'green']
+        };
+        if(transformJSON){
+          var dataEditor = new DataEditor();
+          var fields = keyColumnsJSON.concat(valueColumnsJSON);
+          var createQuery = new CreateQuery();
+          console.log(fields);
+          var query = createQuery.makeQuery(groupsJSON, transformKeysJSON, "SUM", columnsJSON);
+          console.log(query);
+          let results = dataEditor.performQuery(dataJSONQuery, fields, query);
+          console.log(results)
+          let resultsArray = ArrayFunctions.keyValueToArray(results, color=header[3], size=header[4]);
+          resultsArray.unshift(columnsJSON);
+          console.log(resultsArray);
+          dataJSON.unshift(header);
+            var data2 = google.visualization.arrayToDataTable(resultsArray);
+            chart.draw(data2, options);
+
+        }
+
+      }
+
+
+    }
+
+
+
+

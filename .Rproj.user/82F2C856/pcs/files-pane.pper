@@ -1,0 +1,9 @@
+{
+    "path" : "~/googleCharts/inst/htmlwidgets/lib/dataAggregator",
+    "sortOrder" : [
+        {
+            "ascending" : true,
+            "columnIndex" : 2
+        }
+    ]
+}

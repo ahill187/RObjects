@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1553812674353.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "856518052",
+    "id" : "347E1758",
+    "lastKnownWriteTime" : 1553734322,
+    "last_content_update" : 1553734322,
+    "path" : "~/BurdenOfAsthma/R/TabItemDashGraph.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "125,0",
+        "scrollLine" : "0"
+    },
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
